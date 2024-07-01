@@ -1,0 +1,9 @@
+export const LOGIN_DATA = 'LOGIN_DATA';
+export const PET_LIST ='PET_LIST';
+export const COUNTRY_LIST = 'COUNTRY_LIST'
+export const STATE_LIST ='STATE_LIST';
+export const CITY_LIST ='CITY_LIST';
+export const CATEGORY_LIST = 'CATEGORY_LIST';
+export const BREED_LIST ='BREED_LIST';
+export const ALL_POSTS ='ALL_POSTS';
+export const ALLPETS_CATEGORY ='ALLPETS_CATEGORY';
