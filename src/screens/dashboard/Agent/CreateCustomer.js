@@ -96,7 +96,7 @@ const CreateCustomer = (props) => {
           .then((res) => {
             console.log(
               "response in create schedule of create customer=" +
-                JSON.stringify(res.data)
+              JSON.stringify(res.data)
             );
             for (var i = 0; i < res.data.OutPut.length; i++) {
               modeldata.push({
@@ -116,110 +116,217 @@ const CreateCustomer = (props) => {
     });
   }, []);
 
+  // const checkValidation = async () => {
+  //   setFNameError(fName === "");
+  //   setLNameError(lName === "");
+  //   setEmailError(email === "");
+  //   setMobileError(mobile === "");
+  //   setAddressError(address === "");
+  //   // setModelTypeError(modelType === "");
+
+  //   setFNameTouched(true);
+  //   setLNameTouched(true);
+  //   setEmailTouched(true);
+  //   setMobileTouched(true);
+  //   setAddressTouched(true);
+  //   // setModelTypeTouched(true);
+
+  //   if (
+  //     fName != "" &&
+  //     lName != "" &&
+  //     email != "" &&
+  //     mobile != "" &&
+  //     address != "" &&
+  //     modelType != ""
+  //   ) {
+  //     setApiLoader(true);
+  //     // setApiLoader(true);
+  //     const data = new FormData();
+  //     data.append("user_type", "Users");
+  //     data.append("fname", fName);
+  //     data.append("lname", lName);
+  //     data.append("mobile", mobile);
+  //     data.append("address", address);
+  //     data.append("email", email);
+  //     data.append("password", "01010101");
+  //     data.append("schedulartype", "New Installment");
+  //     data.append("modelType", modelType);
+  //     data.append("agent_id", await AsyncStorage.getItem("user_id"));
+
+  //     let webApiUrl =
+  //       EnvVariables.API_HOST + `APIs/UserRegistration/CreateCustomer.php?`;
+
+  //     let res = await fetch(webApiUrl, {
+  //       method: "post",
+  //       body: data,
+  //     });
+
+  //     let responseJson = await res.json();
+  //     console.log("response json=" + JSON.stringify(responseJson));
+
+  //     setApiLoader(false);
+  //     // setApiLoader(false);
+  //     // cleanUp();
+  //     if (responseJson.status == true) {
+  //       let today = new Date().toISOString().slice(0, 10);
+  //       console.log("today==" + today);
+  //       AsyncStorage.setItem("screenBoolean", "false");
+  //       props.navigation.dispatch(
+  //         CommonActions.reset({
+  //           index: 0,
+  //           routes: [
+  //             {
+  //               name: "AddMeasurnment",
+  //               params: {
+  //                 order_id: responseJson.Output[0].order_request_id,
+  //                 order_request: modelType,
+  //                 date_of_visit: "",
+  //                 S_T_V: "",
+  //                 Request_by_name:
+  //                   responseJson.Output[0].first_name +
+  //                   " " +
+  //                   responseJson.Output[0].last_name,
+  //                 contact_no: responseJson.Output[0].mobile,
+  //                 visit_address: responseJson.Output[0].address1,
+  //                 created_date: today,
+  //                 customerId: responseJson.Output[0].customer_id,
+  //                 boo: "CreateCustomer",
+  //               },
+  //             },
+  //           ],
+  //         })
+  //       );
+  //       // props.navigation.navigate('AddMeasurnment', {
+  //       //     order_id:responseJson.Output[0].order_request_id,
+  //       //     order_request:modelType,
+  //       //     date_of_visit:'',
+  //       //     S_T_V:'',
+  //       //     Request_by_name:responseJson.Output[0].first_name+" "+responseJson.Output[0].last_name,
+  //       //     contact_no:responseJson.Output[0].mobile,
+  //       //     visit_address:responseJson.Output[0].address1,
+  //       //     created_date:'',
+  //       //     customerId:responseJson.Output[0].customer_id,
+  //       //     boo:"CreateCustomer"
+  //       //     // boo:true
+  //       //   })
+  //     } else {
+  //       Alert.alert("", responseJson.message, [
+  //         { text: "Ok", style: "cancel" },
+  //       ]);
+  //     }
+  //   } else {
+  //     Alert.alert("", "Please fill all the details", [
+  //       { text: "Ok", style: "cancel" },
+  //     ]);
+  //   }
+  // };
+
   const checkValidation = async () => {
+    // Setting error and touched states
     setFNameError(fName === "");
     setLNameError(lName === "");
     setEmailError(email === "");
     setMobileError(mobile === "");
     setAddressError(address === "");
-    // setModelTypeError(modelType === "");
 
     setFNameTouched(true);
     setLNameTouched(true);
     setEmailTouched(true);
     setMobileTouched(true);
     setAddressTouched(true);
-    // setModelTypeTouched(true);
 
+    // Check if all fields are valid
     if (
-      fName != "" &&
-      lName != "" &&
-      email != "" &&
-      mobile != "" &&
-      address != "" &&
-      modelType != ""
+      fName !== "" &&
+      lName !== "" &&
+      email !== "" &&
+      mobile !== "" &&
+      address !== "" &&
+      modelType !== ""
     ) {
       setApiLoader(true);
-      // setApiLoader(true);
-      const data = new FormData();
-      data.append("user_type", "Users");
-      data.append("fname", fName);
-      data.append("lname", lName);
-      data.append("mobile", mobile);
-      data.append("address", address);
-      data.append("email", email);
-      data.append("password", "01010101");
-      data.append("schedulartype", "New Installment");
-      data.append("modelType", modelType);
-      data.append("agent_id", await AsyncStorage.getItem("user_id"));
 
-      let webApiUrl =
-        EnvVariables.API_HOST + `APIs/UserRegistration/CreateCustomer.php?`;
+      try {
+        // Prepare form data
+        const data = new FormData();
+        data.append("user_type", "Users");
+        data.append("fname", fName);
+        data.append("lname", lName);
+        data.append("mobile", mobile);
+        data.append("address", address);
+        data.append("email", email);
+        data.append("password", "01010101");
+        data.append("schedulartype", "New Installment");
+        data.append("modelType", modelType);
+        const userId = await AsyncStorage.getItem("user_id");
+        data.append("agent_id", userId);
 
-      let res = await fetch(webApiUrl, {
-        method: "post",
-        body: data,
-      });
+        // API call
+        const webApiUrl = `${EnvVariables.API_HOST}APIs/UserRegistration/CreateCustomer.php`;
+        const res = await fetch(webApiUrl, {
+          method: "post",
+          body: data,
+        });
 
-      let responseJson = await res.json();
-      console.log("response json=" + JSON.stringify(responseJson));
+        const responseJson = await res.json();
+        console.log("response json=" + JSON.stringify(responseJson));
 
-      setApiLoader(false);
-      // setApiLoader(false);
-      // cleanUp();
-      if (responseJson.status == true) {
-        let today = new Date().toISOString().slice(0, 10);
-        console.log("today==" + today);
-        AsyncStorage.setItem("screenBoolean", "false");
-        props.navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [
-              {
-                name: "AddMeasurnment",
-                params: {
-                  order_id: responseJson.Output[0].order_request_id,
-                  order_request: modelType,
-                  date_of_visit: "",
-                  S_T_V: "",
-                  Request_by_name:
-                    responseJson.Output[0].first_name +
-                    " " +
-                    responseJson.Output[0].last_name,
-                  contact_no: responseJson.Output[0].mobile,
-                  visit_address: responseJson.Output[0].address1,
-                  created_date: today,
-                  customerId: responseJson.Output[0].customer_id,
-                  boo: "CreateCustomer",
-                },
-              },
-            ],
-          })
-        );
-        // props.navigation.navigate('AddMeasurnment', {
-        //     order_id:responseJson.Output[0].order_request_id,
-        //     order_request:modelType,
-        //     date_of_visit:'',
-        //     S_T_V:'',
-        //     Request_by_name:responseJson.Output[0].first_name+" "+responseJson.Output[0].last_name,
-        //     contact_no:responseJson.Output[0].mobile,
-        //     visit_address:responseJson.Output[0].address1,
-        //     created_date:'',
-        //     customerId:responseJson.Output[0].customer_id,
-        //     boo:"CreateCustomer"
-        //     // boo:true
-        //   })
-      } else {
-        Alert.alert("", responseJson.message, [
+        setApiLoader(false);
+
+        if (responseJson.status) {
+          const today = new Date().toISOString().slice(0, 10);
+          console.log("today==" + today);
+
+          await AsyncStorage.setItem("screenBoolean", "false");
+          // props.navigation.dispatch(
+          //   CommonActions.reset({
+          //     index: 0,
+          //     routes: [
+          //       {
+          //         name: "AddMeasurnment",
+          //         params: {
+          //           order_id: responseJson.Output[0].order_request_id,
+          //           order_request: modelType,
+          //           date_of_visit: "",
+          //           S_T_V: "",
+          //           Request_by_name: `${responseJson.Output[0].first_name} ${responseJson.Output[0].last_name}`,
+          //           contact_no: responseJson.Output[0].mobile,
+          //           visit_address: responseJson.Output[0].address1,
+          //           created_date: today,
+          //           customerId: responseJson.Output[0].customer_id,
+          //           boo: "CreateCustomer",
+          //         },
+          //       },
+          //     ],
+          //   })
+          // );
+          props.navigation.navigate('AddMeasurnment', {
+            order_id: responseJson.Output[0].order_request_id,
+            order_request: modelType,
+            date_of_visit: '',
+            S_T_V: '',
+            Request_by_name: `${responseJson.Output[0].first_name} ${responseJson.Output[0].last_name}`,
+            contact_no: responseJson.Output[0].mobile,
+            visit_address: responseJson.Output[0].address1,
+            created_date: today,
+            customerId: responseJson.Output[0].customer_id,
+            boo: "CreateCustomer"
+          });
+        } else {
+          Alert.alert("", responseJson.message, [{ text: "Ok", style: "cancel" }]);
+        }
+      } catch (error) {
+        console.error('Error during API call:', error);
+        setApiLoader(false);
+        Alert.alert("Error", "Something went wrong. Please try again later.", [
           { text: "Ok", style: "cancel" },
         ]);
       }
     } else {
-      Alert.alert("", "Please fill all the details", [
-        { text: "Ok", style: "cancel" },
-      ]);
+      Alert.alert("", "Please fill all the details", [{ text: "Ok", style: "cancel" }]);
     }
   };
+
   useEffect(() => {
     props.navigation.addListener("blur", () => {
       console.log("unblurred from home");
@@ -273,7 +380,7 @@ const CreateCustomer = (props) => {
                           activeOutlineColor={Colors.backgroundColor}
                         /> */}
             <TextInput
-              style={[styles.dropdown,{
+              style={[styles.dropdown, {
                 width: "100%",
                 backgroundColor: "white",
                 padding: 10,
@@ -302,7 +409,7 @@ const CreateCustomer = (props) => {
                           onChangeText={(value) => setLName(value)}
                         /> */}
             <TextInput
-              style={[styles.dropdown,{
+              style={[styles.dropdown, {
                 width: "100%",
                 backgroundColor: "white",
                 padding: 10,
@@ -334,7 +441,7 @@ const CreateCustomer = (props) => {
                         /> */}
 
             <TextInput
-              style={[styles.dropdown,{
+              style={[styles.dropdown, {
                 width: "100%",
                 backgroundColor: "white",
                 padding: 10,
@@ -367,7 +474,7 @@ const CreateCustomer = (props) => {
                         /> */}
 
             <TextInput
-              style={[styles.dropdown,{
+              style={[styles.dropdown, {
                 width: "100%",
                 backgroundColor: "white",
                 padding: 10,
@@ -400,7 +507,7 @@ const CreateCustomer = (props) => {
                         /> */}
 
             <TextInput
-              style={[styles.dropdown,{
+              style={[styles.dropdown, {
                 width: "100%",
                 backgroundColor: "white",
                 padding: 10,
@@ -431,7 +538,7 @@ const CreateCustomer = (props) => {
                 isFocus && { borderColor: "black" },
               ]}
               containerStyle={{ top: Platform.OS == "android" && -30 }}
-              placeholderStyle={{ fontSize: 16,color:'#000' }}
+              placeholderStyle={{ fontSize: 16, color: '#000' }}
               selectedTextStyle={{ ...styles.selectedTextStyle, fontSize: 16 }}
               itemTextStyle={{ color: 'black', fontSize: 16 }}
               iconStyle={styles.iconStyle}
@@ -452,9 +559,7 @@ const CreateCustomer = (props) => {
             <View style={{ width: "80%", alignSelf: "center", marginTop: 15 }}>
               <ButtonComp
                 title={"Submit"}
-                onPress={() => {
-                  checkValidation();
-                }}
+                onPress={checkValidation}
               />
               {/* props.navigation.navigate('CreateCustomer') */}
             </View>
@@ -515,7 +620,7 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 16,
-    color:'#000'
+    color: '#000'
   },
   iconStyle: {
     width: 20,

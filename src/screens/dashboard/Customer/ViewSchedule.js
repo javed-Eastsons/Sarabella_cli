@@ -11,7 +11,7 @@ import {
   StyleSheet,
   RefreshControl,
   ImageBackground,
-  TouchableOpacity,Image
+  TouchableOpacity, Image
 } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -44,14 +44,14 @@ const ViewSchedule = (props) => {
 
   const isFocused = useIsFocused();
 
-  const setDetails=async()=>{
+  const setDetails = async () => {
     // setUserType(await AsyncStorage.getItem("user_type"));
     setId(await AsyncStorage.getItem("user_id"));
-    console.log('first this should print'+id)
+    console.log('first this should print' + id)
   }
 
   useEffect(() => {
-    if(isFocused){
+    if (isFocused) {
       setDetails()
       if (dataload == false) {
         // setId(await AsyncStorage.getItem("user_id"));
@@ -70,9 +70,9 @@ const ViewSchedule = (props) => {
     }
   }, [id, schedule, setDetails]);
 
-  useEffect(()=>{
-    props.navigation.addListener('blur', () => {console.log('unblurred');setApiLoader(true);setDataLoaded(false)})
-  },[])
+  useEffect(() => {
+    props.navigation.addListener('blur', () => { console.log('unblurred'); setApiLoader(true); setDataLoaded(false) })
+  }, [])
 
   console.log("id=" + id);
   console.log("schedule=" + JSON.stringify(schedule));
@@ -90,17 +90,17 @@ const ViewSchedule = (props) => {
     setRefreshing(false);
   }, [id, schedule]);
 
-  if(schedule==undefined){
-    return(
+  if (schedule == undefined) {
+    return (
       <View style={{ flex: 1, backgroundColor: "#c9d1fb" }}>
         <ImageBackground
           source={require("./../../../assets/background.png")}
           resizeMode="cover"
           style={styles.rootScreen}
           imageStyle={styles.backgroundImage}>
-            <View style={styles.viewNothing}>
-              <Text style={styles.textNothing}>No Schedules Yet</Text>
-            </View>
+          <View style={styles.viewNothing}>
+            <Text style={styles.textNothing}>No Schedules Yet</Text>
+          </View>
         </ImageBackground>
       </View>
     )
@@ -115,15 +115,15 @@ const ViewSchedule = (props) => {
         imageStyle={styles.backgroundImage}
       >
         {apiLoader ? (
-         <Splash style={{alignItems:'center', justifyContent:'center', flex:1}}>
-         <Image
-          source={require("../../../assets/logo.png")}
-          resizeMode="contain"
-          resizeMethod="scale"
-          style={{ width: 160, height: 160 }}
-        />
-        <Text style={{fontWeight:'bold', marginTop:10}}>Loading...</Text>
-      </Splash>
+          <Splash style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+            <Image
+              source={require("../../../assets/logo.png")}
+              resizeMode="contain"
+              resizeMethod="scale"
+              style={{ width: 160, height: 160 }}
+            />
+            <Text style={{ fontWeight: 'bold', marginTop: 10 }}>Loading...</Text>
+          </Splash>
         ) : (
           <ScrollView
             showsVerticalScrollIndicator={false}
@@ -170,22 +170,27 @@ const ViewSchedule = (props) => {
                       >
                         <View style={styles.viewInfo}>
                           <Text style={styles.textInfo}>Service Type</Text>
-                          <Text style={{color:'#000'}}>: {value.schedule_type}</Text>
+                          <Text style={{ color: '#000' }}>: {value.schedule_type}</Text>
                         </View>
-                        <View style={styles.viewInfo}>
-                          <Text style={styles.textInfo}>Order Request</Text>
-                          <Text style={{ textTransform: "capitalize",color:'#000' }}>
-                            : {value.order_request}
-                          </Text>
-                        </View>
+                        {
+                          value.order_request ?
+                            <View style={styles.viewInfo}>
+                              <Text style={styles.textInfo}>Order Request</Text>
+                              <Text style={{ textTransform: "capitalize", color: '#000' }}>
+                                : {value.order_request}
+                              </Text>
+                            </View>
+                            : null
+                        }
+
                         <View style={styles.viewInfo}>
                           <Text style={styles.textInfo}>Description</Text>
-                          <Text style={{color:'#000'}}>: {value.consultation}</Text>
+                          <Text style={{ color: '#000' }}>: {value.consultation}</Text>
                         </View>
                         {value.Assigned_To_Agent_Name != " " && (
                           <View style={styles.viewInfo}>
                             <Text style={styles.textInfo}>Assigned To</Text>
-                            <Text style={{color:'#000'}}>: {value.Assigned_To_Agent_Name}</Text>
+                            <Text style={{ color: '#000' }}>: {value.Assigned_To_Agent_Name}</Text>
                           </View>
                         )}
                         {/* <View style={{flexDirection:'row', justifyContent:'space-between', marginTop: 10}}><Text style={{fontWeight:'bold'}}>Schedule Status:</Text><Text style={{ }}>
@@ -195,19 +200,19 @@ const ViewSchedule = (props) => {
                           style={{ borderWidth: 0.5, marginVertical: 10 }}
                         />
                         <View style={styles.dateHead}>
-                          <Text style={{ fontWeight: "bold",color:'#000' }}>Date of request:</Text>
-                          <Text style={{ fontWeight: "bold" ,color:'#000'}}>Date of visit:</Text>
+                          <Text style={{ fontWeight: "bold", color: '#000' }}>Date of request:</Text>
+                          <Text style={{ fontWeight: "bold", color: '#000' }}>Date of visit:</Text>
                         </View>
                         <View style={styles.valueDate}>
                           <View style={{ flexDirection: "row" }}>
-                            <Icon name="calendar-outline" size={14} color={'black'}/>
-                            <Text style={{ marginLeft: 5,color:'#000' }}>
+                            <Icon name="calendar-outline" size={14} color={'black'} />
+                            <Text style={{ marginLeft: 5, color: '#000' }}>
                               {value.created_date}
                             </Text>
                           </View>
                           <View style={{ flexDirection: "row" }}>
                             <Icon name="calendar-outline" size={14} color={'black'} />
-                            <Text style={{ marginLeft: 5,color:'#000' }}>
+                            <Text style={{ marginLeft: 5, color: '#000' }}>
                               {value.date_of_visit}
                             </Text>
                           </View>
@@ -252,19 +257,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginTop: 10,
   },
-  textInfo: { fontWeight: "bold", width: 130 ,color:'#000'},
-  dateHead:{
+  textInfo: { fontWeight: "bold", width: 130, color: '#000' },
+  dateHead: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 5,
   },
-  valueDate:{
+  valueDate: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 10,
   },
-  viewNothing:{justifyContent:'center', alignItems:'center', flex:1},
-  textNothing:{fontWeight:'bold', fontSize:24, color:'white'}
+  viewNothing: { justifyContent: 'center', alignItems: 'center', flex: 1 },
+  textNothing: { fontWeight: 'bold', fontSize: 24, color: 'white' }
 });
 
 export default ViewSchedule;

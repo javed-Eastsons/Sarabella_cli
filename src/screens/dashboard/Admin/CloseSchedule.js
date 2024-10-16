@@ -71,6 +71,7 @@ const CloseSchedule = (props) => {
   }
 
   console.log("schedule list=" + JSON.stringify(scheduleList));
+  const newSchedule = scheduleList?.reverse();
   return (
     <View style={{ flex: 1, backgroundColor: '#c9d1fb' }}>
       <ImageBackground
@@ -105,7 +106,7 @@ const CloseSchedule = (props) => {
             <View>
               {/* individual boxes of job list starts */}
               {scheduleList != null || scheduleList != undefined
-                ? scheduleList.map((value) => (
+                ? newSchedule.map((value) => (
                     <TouchableOpacity
                       key={value.order_request_id}
                       onPress={() =>

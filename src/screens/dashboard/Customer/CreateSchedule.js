@@ -220,11 +220,13 @@ const CreateSchedule = (props) => {
 
   const createSchedule = async () => {
     if(Platform.OS=='android'){
-      if(label!=null && labelRequest!=null && datePicker!="" && STV!="" && ETV!="" && contact!="" && address!="" && consultation!=""){
+      if( labelRequest!=null && datePicker!="" && STV!="" && ETV!="" && contact!="" && address!="" && consultation!=""){
         setApiLoader(true)
         console.log("id in create=" + id);
         const data = new FormData();
-        data.append("order_request", label);
+        if(label!=null){
+          data.append("order_request", label);
+        }
         data.append("date_of_visit", datePicker);
         data.append("S_T_V", STV);
         data.append("E_T_V", ETV);
@@ -267,11 +269,13 @@ const CreateSchedule = (props) => {
     }
     else {
       console.log('stv=='+moment(dateObj).format('hh:mm a'))
-      if(label!=null && labelRequest!=null && contact!="" && address!="" && consultation!=""){
+      if(labelRequest!=null && contact!="" && address!="" && consultation!=""){
         setApiLoader(true)
         console.log("id in create=" + id);
         const data = new FormData();
-        data.append("order_request", label);
+        if(label!=null){
+          data.append("order_request", label);
+        }
         data.append("date_of_visit", moment(dateAObj).format('DD-MM-YYYY'));
         data.append("S_T_V", moment(dateObj).format('hh:mm a'));
         data.append("E_T_V", moment(dateEndObj).format('hh:mm a'));

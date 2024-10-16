@@ -41,7 +41,7 @@ const CreateAgentJob = (props) => {
   const [agentName, setAgentname] = useState(undefined);
   const [agentId, setAgentId] = useState(undefined);
   const [lname, setLname] = useState(undefined);
- 
+
 
   const [fNameTouched, setFNameTouched] = useState(false);
   const [lNameTouched, setLNameTouched] = useState(false);
@@ -83,40 +83,40 @@ const CreateAgentJob = (props) => {
   // }, []);
 
 
-//   const setDetails=async()=>{
-//     setUserType(await AsyncStorage.getItem("user_type"));
-//     setId(await AsyncStorage.getItem("user_id"));
-//     console.log('first this should print'+id)
-//   }
+  //   const setDetails=async()=>{
+  //     setUserType(await AsyncStorage.getItem("user_type"));
+  //     setId(await AsyncStorage.getItem("user_id"));
+  //     console.log('first this should print'+id)
+  //   }
 
-  useEffect( () => {
-   
-     // setDetails()
-    console.log("inside use effect of profile="+id);
-      console.log("inside if of profile");
-      console.log('id='+id)
-      if(apiLoader==true){
+  useEffect(() => {
+
+    // setDetails()
+    console.log("inside use effect of profile=" + id);
+    console.log("inside if of profile");
+    console.log('id=' + id)
+    if (apiLoader == true) {
       setApiLoader(true);
-        let webApiUrl =
+      let webApiUrl =
         EnvVariables.API_HOST +
         `APIs/ViewUserDetails/ViewUserDetails.php?id=${id}`;
-        console.log('webapiurl in profile='+webApiUrl)
-        axios.get(webApiUrl).then((res) => {
-          console.log("response in profile without=" + JSON.stringify(res.data));
-          setAgentname(res.data.Users_details_View[0].first_name);
-          setLname(res.data.Users_details_View[0].last_name);
-          setAgentId(res.data.Users_details_View[0].user_id);
-         
-          setApiLoader(false);
-        });
-      }
-  
+      console.log('webapiurl in profile=' + webApiUrl)
+      axios.get(webApiUrl).then((res) => {
+        console.log("response in profile without=" + JSON.stringify(res.data));
+        setAgentname(res.data.Users_details_View[0].first_name);
+        setLname(res.data.Users_details_View[0].last_name);
+        setAgentId(res.data.Users_details_View[0].user_id);
+
+        setApiLoader(false);
+      });
+    }
+
 
   }, [id]);
 
-  useEffect(()=>{
-    props.navigation.addListener('blur', () => {console.log('unblurred');setApiLoader(true);})
-  },[])
+  useEffect(() => {
+    props.navigation.addListener('blur', () => { console.log('unblurred'); setApiLoader(true); })
+  }, [])
 
 
   const setDetails = async () => {
@@ -137,7 +137,7 @@ const CreateAgentJob = (props) => {
           .then((res) => {
             console.log(
               "response in create schedule of create customer=" +
-                JSON.stringify(res.data)
+              JSON.stringify(res.data)
             );
             for (var i = 0; i < res.data.OutPut.length; i++) {
               modeldata.push({
@@ -158,30 +158,30 @@ const CreateAgentJob = (props) => {
   }, []);
 
   const checkValidation = async () => {
-  
+
 
     if (
-     
+
       modelType != ""
     ) {
       setApiLoader(true);
       // setApiLoader(true);
       const data = new FormData();
-     
-     // data.append("user_type", "Users");
+
+      // data.append("user_type", "Users");
       data.append("agent_id", id);
       data.append("customer_id", props.route.params.customerId);
-    //   data.append("mobile", mobile);
-    //   data.append("address", address);
-    //   data.append("email", email);
-    //   data.append("password", "01010101");
-    //   data.append("schedulartype", "New Installment");
+      //   data.append("mobile", mobile);
+      //   data.append("address", address);
+      //   data.append("email", email);
+      //   data.append("password", "01010101");
+      //   data.append("schedulartype", "New Installment");
       data.append("order_request", modelType);
-    //   data.append("agent_id", await AsyncStorage.getItem("user_id"));
-  //  let webApiUrl = 'https://refuel.site/projects/tutorapp/APIs/CreateScheduleByAgent/CreateScheduleByAgent.php'
+      //   data.append("agent_id", await AsyncStorage.getItem("user_id"));
+      //  let webApiUrl = 'https://refuel.site/projects/tutorapp/APIs/CreateScheduleByAgent/CreateScheduleByAgent.php'
 
-   
-    let webApiUrl = 
+
+      let webApiUrl =
         EnvVariables.API_HOST + `APIs/CreateScheduleByAgent/CreateScheduleByAgent.php`;
 
       let res = await fetch(webApiUrl, {
@@ -199,31 +199,46 @@ const CreateAgentJob = (props) => {
         let today = new Date().toISOString().slice(0, 10);
         console.log("today==" + today);
         AsyncStorage.setItem("screenBoolean", "false");
-        props.navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [
-              {
-                name: "AddMeasurnment",
-                params: {
-                  order_id: responseJson.Output.order_request_id,
-                  order_request: modelType,
-                  date_of_visit: "",
-                  S_T_V: "",
-                   Request_by_name:
-                     responseJson.Output.Customer_Data.first_name +
-                     " " +
-                     responseJson.Output.Customer_Data.last_name,
-                //   contact_no: responseJson.Output[0].mobile,
-                //   visit_address: responseJson.Output[0].address1,
-                  created_date: today,
-                  customerId: props.route.params.customerId,
-                  boo: "CreateCustomer",
-                },
-              },
-            ],
-          })
-        );
+        // props.navigation.dispatch(
+        //   CommonActions.reset({
+        //     index: 0,
+        //     routes: [
+        //       {
+        //         name: "AddMeasurnment",
+        //         params: {
+        //           order_id: responseJson.Output.order_request_id,
+        //           order_request: modelType,
+        //           date_of_visit: "",
+        //           S_T_V: "",
+        //           Request_by_name:
+        //             responseJson.Output.Customer_Data.first_name +
+        //             " " +
+        //             responseJson.Output.Customer_Data.last_name,
+        //           //   contact_no: responseJson.Output[0].mobile,
+        //           //   visit_address: responseJson.Output[0].address1,
+        //           created_date: today,
+        //           customerId: props.route.params.customerId,
+        //           boo: "CreateCustomer",
+        //         },
+        //       },
+        //     ],
+        //   })
+        // );
+        props.navigation.navigate('AddMeasurnment', {
+          order_id: responseJson.Output.order_request_id,
+          order_request: modelType,
+          date_of_visit: "",
+          S_T_V: "",
+          Request_by_name:
+            responseJson.Output.Customer_Data.first_name +
+            " " +
+            responseJson.Output.Customer_Data.last_name,
+          //   contact_no: responseJson.Output[0].mobile,
+          //   visit_address: responseJson.Output[0].address1,
+          created_date: today,
+          customerId: props.route.params.customerId,
+          boo: "CreateCustomer",
+        });
         // props.navigation.navigate('AddMeasurnment', {
         //     order_id:responseJson.Output[0].order_request_id,
         //     order_request:modelType,
@@ -300,14 +315,14 @@ const CreateAgentJob = (props) => {
                           onChangeText={(value) => setFName(value)}
                           activeOutlineColor={Colors.backgroundColor}
                         /> */}
-          
+
             {/* <TextInput
                           style={{ width: "100%", backgroundColor:'white',padding:10,borderRadius:9,marginTop:10 }}
                           value={lName}
                           placeholder='Last Name'
                           onChangeText={(value) => setLName(value)}
                         /> */}
-           
+
 
             {/* <TextInput
                           style={{ width: "100%", backgroundColor:'white',padding:10,borderRadius:9,marginTop:10 }}
@@ -317,7 +332,7 @@ const CreateAgentJob = (props) => {
                           onChangeText={(value) => setEmail(value)}
                         /> */}
 
-         
+
             {/* <TextInput
                           style={{ width: "100%", backgroundColor:'white',padding:10,borderRadius:9,marginTop:10 }}
                           value={mobile}
@@ -326,7 +341,7 @@ const CreateAgentJob = (props) => {
                           onChangeText={(value) => setMobile(value)}
                         /> */}
 
-        
+
 
             {/* <TextInput
                           style={{ width: "100%", backgroundColor:'white',padding:10,borderRadius:9,marginTop:10 }}
@@ -335,17 +350,18 @@ const CreateAgentJob = (props) => {
                           placeholder='Address'
                           onChangeText={(value) => setAddress(value)}
                         /> */}
-<Text 
-style={{ 
-    width: "100%", backgroundColor:'white',padding:10,borderRadius:9,marginTop:10 ,color:'#000'}}
+            <Text
+              style={{
+                width: "100%", backgroundColor: 'white', padding: 10, borderRadius: 9, marginTop: 10, color: '#000'
+              }}
 
->{agentName} {id}</Text>
+            >{agentName} {id}</Text>
 
 
-     <Text
- style={{ width: "100%", backgroundColor:'white',padding:10,borderRadius:9,marginTop:10,color:'#000' }}
-             
-             > {props.route.params.customerName} {props.route.params.customerId}</Text>
+            <Text
+              style={{ width: "100%", backgroundColor: 'white', padding: 10, borderRadius: 9, marginTop: 10, color: '#000' }}
+
+            > {props.route.params.customerName} {props.route.params.customerId}</Text>
             <Dropdown
               style={[
                 styles.dropdown,
@@ -373,9 +389,7 @@ style={{
             <View style={{ width: "80%", alignSelf: "center", marginTop: 15 }}>
               <ButtonComp
                 title={"Submit"}
-                onPress={() => {
-                  checkValidation();
-                }}
+                onPress={checkValidation}
               />
               {/* props.navigation.navigate('CreateCustomer') */}
             </View>

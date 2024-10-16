@@ -244,7 +244,7 @@ const PaymentStatus = (props) => {
       setApiLoader(true)
     })
   },[])
-
+ const NewquotationNo = quotationNo?.reverse()
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" && "padding" } style={{flex:1}}>
     <View style={{ backgroundColor: '#c9d1fb', flex: 1 }}>
@@ -286,7 +286,7 @@ const PaymentStatus = (props) => {
                         selectedTextStyle={styles.selectedTextStyle}
                         itemTextStyle={{ color: 'black', fontSize: 16 }}
                         iconStyle={styles.iconStyle}
-                        data={quotationNo}
+                        data={NewquotationNo}
                         containerStyle={{
                           backgroundColor: 'white',
                           top:Platform.OS=='android'&&-30

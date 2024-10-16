@@ -144,9 +144,10 @@ const CustomDrawerContent = (props) => {
           await AsyncStorage.removeItem("last_name");
           await AsyncStorage.removeItem("profile_image");
           await AsyncStorage.removeItem("user_type");
-          props.navigation.dispatch(
-            CommonActions.reset({ routes: [{ name: "Login" }] })
-          );
+          props.navigation.navigate('Login', {});
+          // props.navigation.dispatch(
+          //   CommonActions.reset({ routes: [{ name: "Login" }] })
+          // );
           // props.navigation.navigate("Login");
         },
       },

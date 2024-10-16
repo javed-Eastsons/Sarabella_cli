@@ -603,7 +603,7 @@ const EditCustomerMeasurement = (props) => {
   }
 
   const addInput = (details) => {
-    console.log("addInput details = =", JSON.stringify(details))
+    console.log("addInput details = =",details);
     refInputs.current.push(details.product);
     refInputsStyle.current.push(details.style);
     refInputsColor.current.push(details.color);

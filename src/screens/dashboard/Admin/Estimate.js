@@ -69,7 +69,7 @@ const Estimate = (props) => {
       </View>
     )
   }
-
+const NewscheduleList = scheduleList?.reverse()
   return (
     <View style={{ flex: 1, backgroundColor: '#c9d1fb' }}>
       <ImageBackground
@@ -104,7 +104,7 @@ const Estimate = (props) => {
             <View>
               {/* individual boxes of job list starts */}
               {scheduleList != null || scheduleList != undefined
-                ? scheduleList.map((value) => (
+                ? NewscheduleList.map((value) => (
                     <TouchableOpacity
                       key={value.order_request_id}
                       onPress={() =>
